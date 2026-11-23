@@ -1,0 +1,37 @@
+{% extends 'tasks/base.html' %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+<h1>{{ page_title }}</h1>
+
+<form method="post">
+  {% csrf_token %}
+
+  {{ form.non_field_errors }}
+
+  <p>
+    {{ form.title.label_tag }}<br>
+    {{ form.title }}
+    {{ form.title.errors }}
+  </p>
+
+  <p>
+    {{ form.description.label_tag }}<br>
+    {{ form.description }}
+    {{ form.description.errors }}
+  </p>
+
+  <p>
+    {{ form.completed }} {{ form.completed.label_tag }}
+    {{ form.completed.errors }}
+  </p>
+
+  <button type="submit">Save</button>
+    {% if task %}
+    <a href="{% url 'tasks:task_detail' task.pk %}">Cancel</a>
+  {% else %}
+    <a href="{% url 'tasks:task_list' %}">Cancel</a>
+  {% endif %}
+</form>
+{% endblock %}

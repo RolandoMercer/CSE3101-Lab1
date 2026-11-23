@@ -1,0 +1,34 @@
+{% extends 'tasks/base.html' %}
+
+{% block title %}All Tasks{% endblock %}
+
+{% block content %}
+<h1>All Tasks</h1>
+
+{% if tasks %}
+  <table>
+    <tr>
+      <th>Title</th>
+      <th>Status</th>
+      <th>Created</th>
+      <th>Actions</th>
+    </tr>
+    {% for task in tasks %}
+    <tr>
+      <td class="{% if task.completed %}done{% endif %}">
+        <a href="{% url 'tasks:task_detail' task.pk %}">{{ task.title }}</a>
+      </td>
+      <td>{% if task.completed %}Completed{% else %}Pending{% endif %}</td>
+      <td>{{ task.created_at|date:"M d, Y H:i" }}</td>
+      <td>
+        <a href="{% url 'tasks:task_detail' task.pk %}">View</a> |
+        <a href="{% url 'tasks:task_update' task.pk %}">Edit</a> |
+        <a href="{% url 'tasks:task_delete' task.pk %}">Delete</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+{% else %}
+  <p>There are no tasks yet. <a href="{% url 'tasks:task_create' %}">Add your first task</a>.</p>
+{% endif %}
+{% endblock %}

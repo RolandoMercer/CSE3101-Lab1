@@ -1,0 +1,23 @@
+{% extends 'tasks/base.html' %}
+
+{% block title %}{{ task.title }}{% endblock %}
+
+{% block content %}
+<h1>{{ task.title }}</h1>
+
+<p><strong>Status:</strong> {% if task.completed %}Completed{% else %}Pending{% endif %}</p>
+<p><strong>Created:</strong> {{ task.created_at|date:"M d, Y H:i" }}</p>
+
+<h3>Description</h3>
+{% if task.description %}
+  <p>{{ task.description|linebreaksbr }}</p>
+{% else %}
+  <p><em>No description provided.</em></p>
+{% endif %}
+
+<p>
+  <a href="{% url 'tasks:task_update' task.pk %}">Edit</a> |
+  <a href="{% url 'tasks:task_delete' task.pk %}">Delete</a> |
+  <a href="{% url 'tasks:task_list' %}">Back to list</a>
+</p>
+{% endblock %}
